@@ -1,0 +1,35 @@
+[
+  {
+    "id": "64c62bfc65af9f8c969a8d04",
+    "name": "USA",
+    "image": "https://cdn.pixabay.com/photo/2024/05/22/20/18/photo-8781624_1280.jpg",
+    "description": "The USA is a tourist magnet, known for its diverse landscapes, rich history, and vibrant culture. The USA is a tourist magnet, known for its diverse landscapes, rich history, and vibrant cultureThe USA is a tourist magnet, known for its diverse landscapes, rich history, and vibrant culture The USA is a tourist magnet, known for its diverse landscapes, rich history, and vibrant culture The USA is a tourist magnet, known for its diverse landscapes, rich history, and vibrant culture",
+    "duration": "7 Days",
+    "location": "North America, USA",
+    "price": 1500,
+    "rating": 4.8,
+    "category": 1
+  },
+  {
+    "id": "64cf2c565d14628d0ac0a2b7",
+    "name": "Pakistan",
+    "image": "https://cdn.pixabay.com/photo/2024/05/22/20/18/photo-8781624_1280.jpg",
+    "description": "Pakistan is a country located in South Asia. It shares borders with India, Afghanistan, and Iran.",
+    "duration": "10 Days",
+    "location": "South Asia, Pakistan",
+    "price": 1000,
+    "rating": 4.5,
+    "category": 2
+  },
+  {
+    "id": "64cf2c935d14628d0ac0a2b9",
+    "name": "India",
+    "image": "https://cdn.pixabay.com/photo/2024/05/22/20/18/photo-8781624_1280.jpg",
+    "description": "India is a vast and diverse country in South Asia. It is known for its cultural heritage, historical sites, and natural beauty.",
+    "duration": "14 Days",
+    "location": "South Asia, India",
+    "price": 1200,
+    "rating": 4.7,
+    "category": 3
+  }
+]
