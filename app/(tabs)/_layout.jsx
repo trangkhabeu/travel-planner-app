@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import React from "react";
 import { Tabs } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -27,6 +27,32 @@ export default function TabLayout() {
           tabBarLabel: "Khám phá",
           tabBarIcon: ({ color }) => (
             <Ionicons name="globe-sharp" size={24} color={color} />
+          ),
+          headerShown: true,
+          headerTitle: "",
+          headerStyle: {
+            elevation: 0,
+            shadowOpacity: 0,
+            borderBottomWidth: 0,
+          },
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => { }} style={{ marginLeft: 10 }}>
+              <Image source={{ uri: "https://static-cse.canva.com/blob/1806762/1600w-vkBvE1d_xYA.jpg" }}
+                style={{ width: 40, height: 40, borderRadius: 10, marginLeft: 15 }}
+              />
+            </TouchableOpacity>
+          ),
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => { }}
+              style={{
+                marginRight: 20,
+                backgroundColor: "#171717",
+                padding: 10,
+                borderRadius: 30,
+              }}>
+              <Ionicons name="search" size={24} color={Colors.WHITE} />
+            </TouchableOpacity>
           ),
         }}
       />

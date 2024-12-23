@@ -1,0 +1,58 @@
+[
+    {
+        "id": "1",
+        "name": "Holiday Travel Agency",
+        "image": "https://images.unsplash.com/photo-1516496636080-14fb876e029d",
+        "rating": 4.7,
+        "reviews": 1450
+    },
+    {
+        "id": "4",
+        "name": "Adventure Trails",
+        "image": "https://static.toiimg.com/photo/101545435.cms",
+        "rating": 4.6,
+        "reviews": 920
+    },
+    {
+        "id": "5",
+        "name": "Luxury Getaways",
+        "image": "https://static.toiimg.com/photo/101545435.cms",
+        "rating": 4.9,
+        "reviews": 1100
+    },
+    {
+        "id": "6",
+        "name": "Wanderlust Tours",
+        "image": "https://static.toiimg.com/photo/101545435.cms",
+        "rating": 4.8,
+        "reviews": 870
+    },
+    {
+        "id": "7",
+        "name": "Explore & Discover",
+        "image": "https://static.toiimg.com/photo/101545435.cms",
+        "rating": 4.5,
+        "reviews": 560
+    },
+    {
+        "id": "8",
+        "name": "Dream Destinations",
+        "image": "https://static.toiimg.com/photo/101545435.cms",
+        "rating": 4.7,
+        "reviews": 770
+    },
+    {
+        "id": "9",
+        "name": "Epic Adventures",
+        "image": "https://static.toiimg.com/photo/101545435.cms",
+        "rating": 4.6,
+        "reviews": 480
+    },
+    {
+        "id": "10",
+        "name": "Serene Escapes",
+        "image": "https://static.toiimg.com/photo/101545435.cms",
+        "rating": 4.8,
+        "reviews": 940
+    }
+]

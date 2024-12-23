@@ -1,27 +1,48 @@
 import { View, Text, Image } from "react-native";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Colors } from "../../constants/Colors";
 import { CreateTripContext } from "../../context/CreateTripContext";
 import { AI_PROMT } from "../../constants/Options";
+import { getRecommendations } from "../../configs/NerModel";
+import TripCard from "../../components/MyTrips/TripCard";
+
+
 export default function GenerateTrip() {
   const { tripData, setTripData } = useContext(CreateTripContext);
+  const [recommendData, setRecommendData] = useState(null)
 
   useEffect(() => {
+    //     if (tripData) {
+    //       (async () => {
+    //         await GenerateAiTrip();
+    //       })
+    //       // GenerateAiTrip();
+    //     }
     tripData && GenerateAiTrip();
   }, [tripData]);
 
-  const GenerateAiTrip = () => {
-    const FINAL_PROMPT = AI_PROMT.replace(
-      "{location}",
-      tripData?.locationInfo?.name
-    )
-      .replace("{totalDays}", tripData.totalNoOfDays)
-      .replace("{totalNight}", tripData.totalNoOfDays - 1)
-      .replace("{traveler}", tripData.traveler?.title)
-      .replace("{budget}", tripData.budget)
-      .replace("{totalDays}", tripData.totalNoOfDays)
-      .replace("{totalNight}", tripData.totalNoOfDays - 1);
-    console.log(FINAL_PROMPT);
+  const GenerateAiTrip = async () => {
+    try {
+      const FINAL_PROMPT = AI_PROMT.replace(
+        "{location}",
+        tripData?.locationInfo?.name
+      )
+        .replace("{totalDays}", tripData.totalNoOfDays)
+        .replace("{totalNight}", tripData.totalNoOfDays - 1)
+        .replace("{traveler}", tripData.traveler?.title)
+        .replace("{budget}", tripData.budget)
+        .replace("{totalDays}", tripData.totalNoOfDays)
+        .replace("{totalNight}", tripData.totalNoOfDays - 1);
+      console.log("Final prompt", FINAL_PROMPT);
+
+      const result = await getRecommendations(FINAL_PROMPT);
+      if (!result) throw new Error("Error get recommendations");
+
+      setRecommendData(result);
+      console.log(result);
+    } catch (error) {
+      console.log("Error get recommendations trip", error);
+    }
   };
 
   return (
@@ -32,7 +53,7 @@ export default function GenerateTrip() {
         height: "100%",
       }}
     >
-      <Text
+      {/* <Text
         style={{
           fontFamily: "outfit-bold",
           fontSize: 35,
@@ -40,21 +61,27 @@ export default function GenerateTrip() {
         }}
       >
         Please Wait....
-      </Text>
+      </Text> */}
 
-      <Text
-        style={{
-          fontFamily: "outfit-medium",
-          fontSize: 20,
-          textAlign: "center",
-          marginTop: 40,
-        }}
-      >
-        We are working to generate your trip
-      </Text>
+{/*       <Text */}
+{/*         style={{ */}
+{/*           fontFamily: "outfit-medium", */}
+{/*           fontSize: 20, */}
+{/*           textAlign: "center", */}
+{/*           marginTop: 40, */}
+{/*         }} */}
+{/*       > */}
+{/*         We are working to generate your trip */}
+{/*       </Text> */}
+      {/* 
+      <Text>
+        {recommendData && JSON.stringify(recommendData)}
+      </Text> */}
 
-      <Image
-        source={require("./../../assets/images/loadd.gif")}
+      <TripCard />
+
+      {/* <Image
+        source={require("./../../assets/images/load.gif")}
         style={{
           width: "100%",
           height: 300,
@@ -70,7 +97,7 @@ export default function GenerateTrip() {
         }}
       >
         Do not go back
-      </Text>
+      </Text> */}
     </View>
   );
 }
