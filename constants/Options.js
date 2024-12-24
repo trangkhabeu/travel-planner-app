@@ -35,21 +35,24 @@ export const SelectBudgetOptions = [
     title: "Cheap",
     desc: "Stay conscious of costs",
     icon: "💵",
+    range: "0 to 20000000",
   },
   {
     id: 2,
     title: "Moderate",
     desc: "Keep cost on the average side",
     icon: "💰",
+    range: "20000001 to 50000000",
   },
   {
     id: 3,
     title: "Luxury",
     desc: "Dont worry about cost",
     icon: "💸",
+    range: "50000001 to 100000000",
   },
 ];
 
 export const AI_PROMT =
-  "Generate Travel Plan for Location: {location}, for {totalDays} Days and {totalNight} Night for {traveler} with a {budget} budget with Flight details, Flight Price with booking URL, Hotels options list with HotelName, Hotel address, Price, hotel image URL, geo coordinates, rating, descriptions and Places to visit nearby with placeName, Place Details, Place Image Url, Geo Coordinates, ticket Pricing, Time to travel each of the locations for {totalDays} days and {totalNight} night with each day plan with the best time to visit in JSON format.";
+  "{location}, {totalDays} Days and {totalNight} Night for {traveler} with a {budget} budget with Flight details, Flight Price with booking URL, Hotels options list with HotelName, Hotel address, Price, hotel image URL, geo coordinates, rating, descriptions and Places to visit nearby with placeName, Place Details, Place Image Url, Geo Coordinates, ticket Pricing, Time to travel each of the locations for {totalDays} days and {totalNight}.";
 

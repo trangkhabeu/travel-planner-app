@@ -36,7 +36,16 @@ const Listing = ({ listing, category }: Props) => {
         onPress={() =>
           router.push({
             pathname: "/discover/[id]",
-            params: { id: item.id },
+            params: {
+              id: item.tour_id,
+              tour_name: item.tour_name,
+              description: item.description,
+              price: item.price,
+              image: item.image,
+              location: item.location,
+              duration: item.duration,
+              average_rating: item.average_rating,
+            },
           })
         }
       >
@@ -46,7 +55,7 @@ const Listing = ({ listing, category }: Props) => {
             <Ionicons name="bookmark-outline" size={20} color={Colors.WHITE} />
           </View>
           <Text style={styles.itemTxt} numberOfLines={1} ellipsizeMode="tail">
-            {item.name}
+            {item.tour_name}
           </Text>
           <View
             style={{ flexDirection: "row", justifyContent: "space-between" }}
@@ -60,7 +69,7 @@ const Listing = ({ listing, category }: Props) => {
               />
               <Text style={[styles.itemLocationTxt]}>{item.location}</Text>
             </View>
-            <Text style={styles.itemPriceTxt}>${item.price}</Text>
+            <Text style={styles.itemPriceTxt}>{item.price} VND</Text>
           </View>
         </View>
       </TouchableOpacity>
