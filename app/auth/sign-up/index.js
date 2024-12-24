@@ -10,8 +10,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigation, useRouter } from "expo-router";
 import { Colors } from "../../../constants/Colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { auth } from "./../../../configs/FireBaseConfig";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import api from '../../../services/api'; // Import api từ folder service
 
 export default function SignUp() {
   const navigation = useNavigation();
@@ -19,7 +18,7 @@ export default function SignUp() {
 
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [fullName, setFullName] = useState();
+  const [name, setName] = useState();
 
   useEffect(() => {
     navigation.setOptions({
@@ -27,27 +26,36 @@ export default function SignUp() {
     });
   }, []);
 
-  const OnCreateAccount = () => {
-    if (!email || !password || !fullName) {
-      ToastAndroid.show("Please enter all details", ToastAndroid.LONG);
+  const OnCreateAccount = async () => {
+    if (!email || !password || !name) {
+      ToastAndroid.show('Please enter all details', ToastAndroid.LONG);
       return;
     }
 
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed up
-        const user = userCredential.user;
-        console.log(user);
-        router.replace("/mytrip");
-        // ...
+    try {
+      const response = await api.post('/app/register', {
+        email,
+        password,
+        name,
+      });
+      ToastAndroid.show('Account created successfully!', ToastAndroid.LONG);
+      console.log('Response:', response.data);
+      router.replace('/mytrip');
+    } catch (error) {
+      console.error('Error:', error.response?.data || error.message);
+      ToastAndroid.show('Failed to create account', ToastAndroid.LONG);
+    }
+  };
+
+  useEffect(() => {
+    api.get('/test')
+      .then((response) => {
+        console.log('API Test Response:', response.data);
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorMessage, errorCode);
-        // ..
+        console.error('API Test Error:', error.response?.data || error.message);
       });
-  };
+  }, []);
 
   return (
     <View
@@ -74,11 +82,11 @@ export default function SignUp() {
 
       {/* enter full name */}
       <View style={{ marginTop: 50 }}>
-        <Text style={{ fontFamily: "outfit" }}>Full Name</Text>
+        <Text style={{ fontFamily: "outfit" }}> Name</Text>
         <TextInput
           style={styles.input}
           placeholder="Nhập tên đầy đủ"
-          onChangeText={(value) => setFullName(value)}
+          onChangeText={(value) => setName(value)}
         />
       </View>
 
@@ -91,6 +99,7 @@ export default function SignUp() {
           onChangeText={(value) => setEmail(value)}
         />
       </View>
+
       {/* passwords */}
       <View style={{ marginTop: 10 }}>
         <Text style={{ fontFamily: "outfit" }}>Mật khẩu</Text>
@@ -155,4 +164,3 @@ const styles = StyleSheet.create({
     fontFamily: "outfit",
   },
 });
-
