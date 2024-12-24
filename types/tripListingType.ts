@@ -1,11 +1,10 @@
 export interface ListingType {
-  id: string;
-  name: string;
-  image: string;
+  tour_id: string;
+  tour_name: string;
+  image: string | null;
   description: string;
   duration: string;
-  location: string;
+  location: string | null;
   price: number;
-  rating: number;
-  category: number;
+  average_rating: number;
 }

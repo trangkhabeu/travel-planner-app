@@ -31,10 +31,19 @@ const { width } = Dimensions.get("window");
 const IMG_HEIGHT = 300;
 
 export default function ListingDetail() {
-  const { id } = useLocalSearchParams();
-  const listing: ListingType = (destinations as ListingType[]).find(
-    item => item.id === id
-  );
+  const {
+    id,
+    tour_name,
+    description,
+    price,
+    image,
+    location,
+    duration,
+    average_rating,
+  } = useLocalSearchParams();
+  // const listing: ListingType = (destinations as ListingType[]).find(
+  //   item => item.id === id
+  // );
 
   const router = useRouter();
 
@@ -69,7 +78,7 @@ export default function ListingDetail() {
       >
         <View>
           <Animated.Image
-            source={{ uri: listing.image }}
+            source={{ uri: image }}
             style={[styles.image, imageAnimatedStyle]}
           />
           {/* Custom Back Button */}
@@ -85,7 +94,7 @@ export default function ListingDetail() {
           </TouchableOpacity>
         </View>
         <View style={styles.contentWrapper}>
-          <Text style={styles.listingName}>{listing.name}</Text>
+          <Text style={styles.listingName}>{tour_name}</Text>
           <View style={styles.listLocationWrapper}>
             <FontAwesome5
               name="map-marker-alt"
@@ -95,7 +104,7 @@ export default function ListingDetail() {
                 borderColor: Colors.WHITE,
               }}
             />
-            <Text style={styles.listLocationTxt}>{listing.location}</Text>
+            <Text style={styles.listLocationTxt}>{location}</Text>
           </View>
           <View style={styles.highlightWrapper}>
             <View style={{ flexDirection: "row" }}>
@@ -104,7 +113,7 @@ export default function ListingDetail() {
               </View>
               <View>
                 <Text style={styles.highlightTxt}>Duration</Text>
-                <Text style={styles.highlightTxtVal}>{listing.duration}</Text>
+                <Text style={styles.highlightTxtVal}>{duration}</Text>
               </View>
             </View>
 
@@ -124,11 +133,11 @@ export default function ListingDetail() {
               </View>
               <View>
                 <Text style={styles.highlightTxt}>Rating</Text>
-                <Text style={styles.highlightTxtVal}>{listing.rating}</Text>
+                <Text style={styles.highlightTxtVal}>{average_rating}</Text>
               </View>
             </View>
           </View>
-          <Text style={styles.listingDetails}>{listing.description}</Text>
+          <Text style={styles.listingDetails}>{description}</Text>
         </View>
       </Animated.ScrollView>
       <Animated.View style={styles.footer} entering={SlideInDown.delay(200)}>
@@ -139,7 +148,7 @@ export default function ListingDetail() {
           <Text style={styles.footerBtnTxt}>Book Now</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => {}} style={styles.footerBtn}>
-          <Text style={styles.footerBtnTxt}>${listing.price}</Text>
+          <Text style={styles.footerBtnTxt}>{price}</Text>
         </TouchableOpacity>
       </Animated.View>
     </View>

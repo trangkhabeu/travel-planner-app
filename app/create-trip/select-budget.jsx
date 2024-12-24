@@ -27,9 +27,10 @@ export default function SelectBudget() {
   }, []);
 
   useEffect(() => {
+    console.log("Selected Option:", selectedOption);
     setTripData({
       ...tripData,
-      budget: selectedOption?.title,
+      budget: selectedOption ? { title: selectedOption?.title, range: selectedOption?.range } : null,
     });
   }, [selectedOption]);
 

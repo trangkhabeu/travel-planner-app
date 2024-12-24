@@ -12,12 +12,6 @@ export default function GenerateTrip() {
   const [recommendData, setRecommendData] = useState(null)
 
   useEffect(() => {
-    //     if (tripData) {
-    //       (async () => {
-    //         await GenerateAiTrip();
-    //       })
-    //       // GenerateAiTrip();
-    //     }
     tripData && GenerateAiTrip();
   }, [tripData]);
 
@@ -30,7 +24,7 @@ export default function GenerateTrip() {
         .replace("{totalDays}", tripData.totalNoOfDays)
         .replace("{totalNight}", tripData.totalNoOfDays - 1)
         .replace("{traveler}", tripData.traveler?.title)
-        .replace("{budget}", tripData.budget)
+        .replace("{budget}", tripData.budget.range)
         .replace("{totalDays}", tripData.totalNoOfDays)
         .replace("{totalNight}", tripData.totalNoOfDays - 1);
       console.log("Final prompt", FINAL_PROMPT);
@@ -39,7 +33,7 @@ export default function GenerateTrip() {
       if (!result) throw new Error("Error get recommendations");
 
       setRecommendData(result);
-      console.log(result);
+      console.log("result", result);
     } catch (error) {
       console.log("Error get recommendations trip", error);
     }
@@ -53,51 +47,14 @@ export default function GenerateTrip() {
         height: "100%",
       }}
     >
-      {/* <Text
-        style={{
-          fontFamily: "outfit-bold",
-          fontSize: 35,
-          textAlign: "center",
-        }}
-      >
-        Please Wait....
-      </Text> */}
-
-{/*       <Text */}
-{/*         style={{ */}
-{/*           fontFamily: "outfit-medium", */}
-{/*           fontSize: 20, */}
-{/*           textAlign: "center", */}
-{/*           marginTop: 40, */}
-{/*         }} */}
-{/*       > */}
-{/*         We are working to generate your trip */}
-{/*       </Text> */}
-      {/* 
       <Text>
-        {recommendData && JSON.stringify(recommendData)}
-      </Text> */}
-
-      <TripCard />
-
-      {/* <Image
-        source={require("./../../assets/images/load.gif")}
-        style={{
-          width: "100%",
-          height: 300,
-          objectFit: "contain",
-        }}
-      />
-      <Text
-        style={{
-          fontFamily: "outfit",
-          color: Colors.GRAY,
-          fontSize: 20,
-          textAlign: "center",
-        }}
-      >
-        Do not go back
-      </Text> */}
+        {recommendData ? (
+          <TripCard cardData={recommendData} />
+        ) : (
+          <Text>No data found</Text>
+        )}
+      </Text>
+      { }
     </View>
   );
 }
