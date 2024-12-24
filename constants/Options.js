@@ -1,3 +1,5 @@
+import { AntDesign, Entypo, FontAwesome } from "@expo/vector-icons";
+
 export const SelectTravelerList = [
   {
     id: 1,
@@ -50,6 +52,24 @@ export const SelectBudgetOptions = [
     desc: "Dont worry about cost",
     icon: "💸",
     range: "50000001 to 100000000",
+  },
+];
+
+export const SelectPayMethod = [
+  {
+    id: 1,
+    title: "Paypal",
+    icon: <Entypo name="paypal" size={24} color="black" />,
+  },
+  {
+    id: 2,
+    title: "Master Card",
+    icon: <FontAwesome name="cc-mastercard" size={24} color="black" />,
+  },
+  {
+    id: 3,
+    title: "Credit Card",
+    icon: <AntDesign name="creditcard" size={24} color="black" />,
   },
 ];
 

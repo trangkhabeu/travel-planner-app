@@ -7,7 +7,7 @@ import {
   Text,
   ScrollView,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { ListingType } from "@/types/tripListingType";
 import destinations from "../../data/destinations.json";
@@ -26,6 +26,7 @@ import Animated, {
   useScrollViewOffset,
 } from "react-native-reanimated";
 import { transform } from "@babel/core";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const { width } = Dimensions.get("window");
 const IMG_HEIGHT = 300;
@@ -46,6 +47,15 @@ export default function ListingDetail() {
   // );
 
   const router = useRouter();
+
+  const [bookmark, setBookmark] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (!isLoading) {
+      renderBookmark(id);
+    }
+  }, [isLoading]);
 
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollViewOffset(scrollRef);
@@ -70,6 +80,46 @@ export default function ListingDetail() {
     };
   });
 
+  const saveBookmark = async (itemId: string) => {
+    setBookmark(true);
+    await AsyncStorage.getItem("bookmark").then((token) => {
+      const res = JSON.parse(token);
+      if (res !== null) {
+        let data = res.find((val: string) => val === itemId);
+        if (data == null) {
+          res.push(itemId);
+          AsyncStorage.setItem("bookmark", JSON.stringify(res));
+          alert("Saved!");
+        }
+      } else {
+        let bookmark = [];
+        bookmark.push(itemId);
+        AsyncStorage.setItem("bookmark", JSON.stringify(bookmark));
+        alert("Saved!");
+      }
+    });
+  };
+
+  const removeBookmark = async (itemId: string) => {
+    setBookmark(false);
+    const bookmark = await AsyncStorage.getItem("bookmark").then((token) => {
+      const res = JSON.parse(token);
+      return res.filter((id: string) => id !== itemId);
+    });
+    await AsyncStorage.setItem("bookmark", JSON.stringify(bookmark));
+    alert("Unsaved!");
+  };
+
+  const renderBookmark = async (itemId: string) => {
+    await AsyncStorage.getItem("bookmark").then((token) => {
+      const res = JSON.parse(token);
+      if (res != null) {
+        let data = res.find((val: string) => val === itemId);
+        data == null ? setBookmark(false) : setBookmark(true);
+      }
+    });
+  };
+
   return (
     <View style={{ flex: 1, backgroundColor: Colors.WHITE }}>
       <Animated.ScrollView
@@ -89,8 +139,14 @@ export default function ListingDetail() {
             <Feather name="arrow-left" size={24} color="black" />
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => {}} style={styles.headerRightButton}>
-            <Ionicons name="bookmark-outline" size={20} />
+          <TouchableOpacity
+            onPress={() => (bookmark ? removeBookmark(id) : saveBookmark(id))}
+            style={styles.headerRightButton}
+          >
+            <Ionicons
+              name={bookmark ? "bookmark" : "bookmark-outline"}
+              size={20}
+            />
           </TouchableOpacity>
         </View>
         <View style={styles.contentWrapper}>
@@ -142,7 +198,7 @@ export default function ListingDetail() {
       </Animated.ScrollView>
       <Animated.View style={styles.footer} entering={SlideInDown.delay(200)}>
         <TouchableOpacity
-          onPress={() => {}}
+          onPress={() => router.replace("/discover/review-booking")}
           style={[styles.footerBtn, styles.footBookBtn]}
         >
           <Text style={styles.footerBtnTxt}>Book Now</Text>

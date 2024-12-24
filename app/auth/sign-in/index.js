@@ -176,4 +176,3 @@ const styles = StyleSheet.create({
     fontFamily: "outfit",
   },
 });
-
