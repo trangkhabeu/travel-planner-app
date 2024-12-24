@@ -7,7 +7,7 @@ import Listing from "../../components/Reuseable/Listing";
 import GroupListing from "../../components/Reuseable/GroupListing";
 import destinations from "../../data/destinations.json";
 import groupData from "../../data/group.json";
-import { loadModel, recommendTours } from "../../configs/AiModal";
+import { recommendTours } from "../../configs/AiModal";
 import { getSimilarTours } from "../../configs/NerModel";
 
 

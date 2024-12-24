@@ -1,15 +1,25 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { Colors } from "../../constants/Colors";
 import { CreateTripContext } from "../../context/CreateTripContext";
 import { AI_PROMT } from "../../constants/Options";
 import { getRecommendations } from "../../configs/NerModel";
 import TripCard from "../../components/MyTrips/TripCard";
+import { useNavigation } from "expo-router";
 
 
 export default function GenerateTrip() {
+  const navigation = useNavigation();
   const { tripData, setTripData } = useContext(CreateTripContext);
   const [recommendData, setRecommendData] = useState(null)
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerShown: true,
+      headerTransparent: true,
+      headerTitle: "",
+    });
+  }, []);
 
   useEffect(() => {
     tripData && GenerateAiTrip();
@@ -33,6 +43,7 @@ export default function GenerateTrip() {
       if (!result) throw new Error("Error get recommendations");
 
       setRecommendData(result);
+      console.log("recommendData", recommendData);
       console.log("result", result);
     } catch (error) {
       console.log("Error get recommendations trip", error);
@@ -47,14 +58,13 @@ export default function GenerateTrip() {
         height: "100%",
       }}
     >
-      <Text>
-        {recommendData ? (
-          <TripCard cardData={recommendData} />
-        ) : (
-          <Text>No data found</Text>
-        )}
-      </Text>
-      { }
+      {Array.isArray(recommendData) && recommendData.length > 0 ? (
+        <TripCard cardData={recommendData} />
+      ) : (
+        <Text>No data found</Text>
+      )}
+
+
     </View>
   );
 }
