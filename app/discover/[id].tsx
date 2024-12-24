@@ -82,7 +82,7 @@ export default function ListingDetail() {
 
   const saveBookmark = async (itemId: string) => {
     setBookmark(true);
-    await AsyncStorage.getItem("bookmark").then((token) => {
+    await AsyncStorage.getItem("bookmark").then(token => {
       const res = JSON.parse(token);
       if (res !== null) {
         let data = res.find((val: string) => val === itemId);
@@ -102,7 +102,7 @@ export default function ListingDetail() {
 
   const removeBookmark = async (itemId: string) => {
     setBookmark(false);
-    const bookmark = await AsyncStorage.getItem("bookmark").then((token) => {
+    const bookmark = await AsyncStorage.getItem("bookmark").then(token => {
       const res = JSON.parse(token);
       return res.filter((id: string) => id !== itemId);
     });
@@ -111,7 +111,7 @@ export default function ListingDetail() {
   };
 
   const renderBookmark = async (itemId: string) => {
-    await AsyncStorage.getItem("bookmark").then((token) => {
+    await AsyncStorage.getItem("bookmark").then(token => {
       const res = JSON.parse(token);
       if (res != null) {
         let data = res.find((val: string) => val === itemId);
@@ -124,7 +124,7 @@ export default function ListingDetail() {
     <View style={{ flex: 1, backgroundColor: Colors.WHITE }}>
       <Animated.ScrollView
         ref={scrollRef}
-        contentContainerStyle={{ paddingBottom: 150 }}
+        contentContainerStyle={{ paddingBottom: 200 }}
       >
         <View>
           <Animated.Image
@@ -175,16 +175,6 @@ export default function ListingDetail() {
 
             <View style={{ flexDirection: "row" }}>
               <View style={styles.highlightIcon}>
-                <FontAwesome name="users" size={18} color={Colors.PRIMARY} />
-              </View>
-              <View>
-                <Text style={styles.highlightTxt}>Person</Text>
-                <Text style={styles.highlightTxtVal}>3</Text>
-              </View>
-            </View>
-
-            <View style={{ flexDirection: "row" }}>
-              <View style={styles.highlightIcon}>
                 <Ionicons name="star" size={18} color={Colors.PRIMARY} />
               </View>
               <View>
@@ -196,7 +186,7 @@ export default function ListingDetail() {
           <Text style={styles.listingDetails}>{description}</Text>
         </View>
       </Animated.ScrollView>
-      <Animated.View style={styles.footer} entering={SlideInDown.delay(200)}>
+      <View style={styles.footer}>
         <TouchableOpacity
           onPress={() => router.replace("/discover/review-booking")}
           style={[styles.footerBtn, styles.footBookBtn]}
@@ -206,7 +196,7 @@ export default function ListingDetail() {
         <TouchableOpacity onPress={() => {}} style={styles.footerBtn}>
           <Text style={styles.footerBtnTxt}>{price}</Text>
         </TouchableOpacity>
-      </Animated.View>
+      </View>
     </View>
   );
 }
@@ -258,7 +248,8 @@ const styles = StyleSheet.create({
   highlightWrapper: {
     flexDirection: "row",
     marginVertical: 20,
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
+    gap: 35,
   },
   highlightIcon: {
     backgroundColor: "rgb(227, 226, 226)",

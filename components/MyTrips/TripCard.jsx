@@ -10,23 +10,25 @@ import {
 } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import FeatherIcon from 'react-native-vector-icons/Feather';
+import { useRouter } from 'expo-router';
 
 
 export default function TripCard({ cardData = [] }) {
     const [saved, setSaved] = React.useState([]);
+    const router = useRouter();
 
     useEffect(() => {
         console.log(cardData);
     }, [cardData]);
 
     const handleSave = useCallback(
-        id => {
-            if (saved.includes(id)) {
+        tour_id => {
+            if (saved.includes(tour_id)) {
                 // remove listing id from the `saved` array
-                setSaved(saved.filter(val => val !== id));
+                setSaved(saved.filter(val => val !== tour_id));
             } else {
                 // add listing id to the `saved` array
-                setSaved([...saved, id]);
+                setSaved([...saved, tour_id]);
             }
         },
         [saved],
@@ -49,19 +51,31 @@ export default function TripCard({ cardData = [] }) {
             </View>
 
             <ScrollView contentContainerStyle={styles.content}>
-                {cardData.map(({ id, image, tour_name, duration, price, average_rating }, index) => {
+                {cardData.map(({ tour_id, image, tour_name, duration, price, average_rating, description, location }, index) => {
                     return (
-                        <TouchableOpacity key={id} onPress={() => {
-
-                        }}>
+                        <TouchableOpacity key={tour_id || `item-${index}`} onPress={() =>
+                            router.push({
+                                pathname: "/discover/[id]",
+                                params: {
+                                    id: tour_id,
+                                    tour_name: tour_name,
+                                    description: description,
+                                    price: price,
+                                    image: image,
+                                    location: location,
+                                    duration: duration,
+                                    average_rating: average_rating,
+                                },
+                            })
+                        }>
                             <View style={styles.card}>
                                 <View style={styles.cardLikeWrapper}>
-                                    <TouchableOpacity onPress={() => handleSave(id)}>
+                                    <TouchableOpacity onPress={() => handleSave(tour_id)}>
                                         <View style={styles.cardLike}>
                                             <FontAwesome
-                                                color={saved ? '#ea266d' : '#222'}
+                                                color={saved.includes(tour_id) ? '#ea266d' : '#222'}
                                                 name="heart"
-                                                solid={saved}
+                                                solid={saved.includes(tour_id)}
                                                 size={20} />
                                         </View>
                                     </TouchableOpacity>
@@ -76,9 +90,10 @@ export default function TripCard({ cardData = [] }) {
                                 </View>
 
                                 <View style={styles.cardBody}>
-                                    <Text style={styles.cardTitle}>{tour_name}</Text>
                                     <View style={styles.cardHeader}>
-
+                                        <Text style={styles.cardTitle}>{tour_name}</Text>
+                                    </View>
+                                    <View style={styles.cardRating}>
                                         <Text style={styles.cardDates}>{duration}</Text>
                                         <FontAwesome
                                             color="#ea266d"
@@ -88,7 +103,6 @@ export default function TripCard({ cardData = [] }) {
                                             style={{ marginBottom: 2 }} />
                                         <Text style={styles.cardStars}>{average_rating}</Text>
                                     </View>
-
                                     <Text style={styles.cardPrice}>
                                         <Text style={{ fontWeight: '600' }}>{price} VND </Text>
                                     </Text>
@@ -178,6 +192,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
     },
+    cardRating: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
     cardTitle: {
         fontSize: 18,
         fontWeight: '500',
@@ -186,7 +205,7 @@ const styles = StyleSheet.create({
     },
     cardStars: {
         marginLeft: 2,
-        marginRight: 4,
+        marginRight: 8,
         fontSize: 15,
         fontWeight: '500',
         color: '#232425',
@@ -195,6 +214,7 @@ const styles = StyleSheet.create({
         marginTop: 4,
         fontSize: 16,
         color: '#595a63',
+        marginRight: 'auto',
     },
     cardPrice: {
         marginTop: 6,
