@@ -1,10 +1,11 @@
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import React from "react";
-import { Tabs } from "expo-router";
+import { Tabs, useRouter } from "expo-router";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Colors } from "./../../constants/Colors";
 
 export default function TabLayout() {
+  const router = useRouter();
   return (
     <Tabs
       screenOptions={{
@@ -15,16 +16,41 @@ export default function TabLayout() {
       <Tabs.Screen
         name="mytrip"
         options={{
-          tabBarLabel: "Chuyến đi",
+          tabBarLabel: "Trips",
           tabBarIcon: ({ color }) => (
             <Ionicons name="location-sharp" size={24} color={color} />
+          ),
+          headerShown: true,
+          headerTitle: " Welcome Back",
+          headerStyle: {
+            elevation: 0,
+            shadowOpacity: 0,
+            borderBottomWidth: 0,
+          },
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => router.replace("/profile")}
+              style={{ marginRight: 15 }}
+            >
+              <Image
+                source={{
+                  uri: "https://static-cse.canva.com/blob/1806762/1600w-vkBvE1d_xYA.jpg",
+                }}
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 10,
+                  marginLeft: 15,
+                }}
+              />
+            </TouchableOpacity>
           ),
         }}
       />
       <Tabs.Screen
         name="discover"
         options={{
-          tabBarLabel: "Khám phá",
+          tabBarLabel: "Explore",
           tabBarIcon: ({ color }) => (
             <Ionicons name="globe-sharp" size={24} color={color} />
           ),
@@ -36,21 +62,33 @@ export default function TabLayout() {
             borderBottomWidth: 0,
           },
           headerLeft: () => (
-            <TouchableOpacity onPress={() => { }} style={{ marginLeft: 10 }}>
-              <Image source={{ uri: "https://static-cse.canva.com/blob/1806762/1600w-vkBvE1d_xYA.jpg" }}
-                style={{ width: 40, height: 40, borderRadius: 10, marginLeft: 15 }}
+            <TouchableOpacity
+              onPress={() => router.replace("/profile")}
+              style={{ marginLeft: 10 }}
+            >
+              <Image
+                source={{
+                  uri: "https://static-cse.canva.com/blob/1806762/1600w-vkBvE1d_xYA.jpg",
+                }}
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 10,
+                  marginLeft: 15,
+                }}
               />
             </TouchableOpacity>
           ),
           headerRight: () => (
             <TouchableOpacity
-              onPress={() => { }}
+              onPress={() => {}}
               style={{
                 marginRight: 20,
                 backgroundColor: "#171717",
                 padding: 10,
                 borderRadius: 30,
-              }}>
+              }}
+            >
               <Ionicons name="search" size={24} color={Colors.WHITE} />
             </TouchableOpacity>
           ),
@@ -59,13 +97,45 @@ export default function TabLayout() {
       <Tabs.Screen
         name="profile"
         options={{
-          tabBarLabel: "Hồ sơ",
+          tabBarLabel: "Profile",
           tabBarIcon: ({ color }) => (
             <Ionicons name="people-circle" size={24} color={color} />
+          ),
+          headerShown: true,
+          headerTitle: "",
+          headerStyle: {
+            elevation: 0,
+            shadowOpacity: 0,
+            borderBottomWidth: 0,
+          },
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => router.back}
+              style={{
+                marginRight: 20,
+                backgroundColor: Colors.WHITE,
+                padding: 10,
+                borderRadius: 30,
+              }}
+            >
+              <Ionicons name="arrow-back" size={24} color="black" />
+            </TouchableOpacity>
+          ),
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => router.replace("auth/sign-in")}
+              style={{
+                marginRight: 20,
+                backgroundColor: Colors.WHITE,
+                padding: 10,
+                borderRadius: 30,
+              }}
+            >
+              <Ionicons name="exit-outline" size={24} color={Colors.PRIMARY} />
+            </TouchableOpacity>
           ),
         }}
       />
     </Tabs>
   );
 }
-

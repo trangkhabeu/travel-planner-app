@@ -29,9 +29,8 @@ export default function MyTrip() {
             fontSize: 35,
           }}
         >
-          Chuyến đi của tôi
+          My trips
         </Text>
-        <Ionicons name="add-circle" size={50} color="black" />
       </View>
       {userTrips?.length == 0 ? <StartNewTripCard /> : null}
     </View>
